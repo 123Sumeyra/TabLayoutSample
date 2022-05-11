@@ -3,6 +3,7 @@ package com.sum.tablayout
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import com.sum.tablayout.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -16,31 +17,14 @@ class MainActivity : AppCompatActivity() {
 
 
 
-        tabLayout.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener {
+        val titleList = arrayListOf("PAGE1", "PAGE2")
 
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                println("onTabSelected")
+        val adapter = TabAdapter(supportFragmentManager, lifecycle)
+        binding.viewPager.adapter = adapter
 
-                // this part will automatically called
-
-            }
-
-            override fun onTabUnselected(tab: TabLayout.Tab?) {
-                println("onTabUnselected")
-
-            }
-
-            override fun onTabReselected(tab: TabLayout.Tab?) { // iki kere aynı table basarsan ne olacak
-                println("onTabReselected")
-
-
-            }
-
-
-
-
-        })
-
+        TabLayoutMediator(binding.tabs, binding.viewPager) { tab, position ->
+            tab.text = titleList[position]
+        }.attach()
 
 
     }
